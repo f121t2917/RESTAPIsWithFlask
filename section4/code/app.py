@@ -1,9 +1,17 @@
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
+from flask_jwt import JWT, jwt_required
+
+from security import authenticate, identity
 
 app = Flask(__name__)
+app.secret_key = 'c8;t}K{MsbK)_7['
 # 使用 flask_restful 的 Api
 api = Api(app)
+
+# Header 加上 Authorization
+# 內容為 JWT access_token
+jwt = JWT(app, authenticate, identity) # POST /auth
 
 # app 重啟前 資料會一直存在
 items = []
@@ -20,6 +28,8 @@ class Item(Resource):
 
     # 也可以使用裝飾器 但如果 class 分散會不好管理
     #@app.route('/item/<string:name')
+    # 加入 jwt 裝飾器，訪問時需要有 access_token 才能訪問
+    @jwt_required()
     def get(self, name):
         # for item in items:
         #     if item['name'] == name:
@@ -63,11 +73,11 @@ class Item(Resource):
         data = Item.parser.parse_args()
         # Once again, print something not in the args to verify everything works
         item = next(filter(lambda x: x['name'] == name, items), None)
-        if item is None:
+        if item is None: # 不存在則新增
             item = {'name': name, 'price': data['price']}
             items.append(item)
         else:
-            item.update(data)
+            item.update(data) # 存在則更新資料
         return item
 
 class ItemList(Resource):
