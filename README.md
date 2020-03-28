@@ -8,6 +8,7 @@ pip freeze
 
 pip install flask
 pip install Flask-RESTful
+pip install Flask-JWT
 ```
 
 ## 使用 virtualenv
@@ -47,3 +48,6 @@ Item resource
  #### section 4
  venv
  Flask-RESTful
+
+ #### section 5
+ SQL Database
