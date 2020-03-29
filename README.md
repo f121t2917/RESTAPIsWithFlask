@@ -9,6 +9,7 @@ pip freeze
 pip install flask
 pip install Flask-RESTful
 pip install Flask-JWT
+pip install Flask-SQLAlchemy
 ```
 
 ## 使用 virtualenv
@@ -45,9 +46,12 @@ Item resource
  * POST /item/chair
 
 
- #### section 4
- venv
- Flask-RESTful
+#### section 4
+venv
+Flask-RESTful
 
- #### section 5
- SQL Database
+#### section 5
+SQL Database
+
+#### section 6
+Flask-SQLAlchemy
